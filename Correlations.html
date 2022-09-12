@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Measuring correlations</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Austin Hart" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/rladies.css" rel="stylesheet" />
+    <link href="libs/remark-css/rladies-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Measuring correlations
+## Building a stats toolkit
+### Austin Hart
+### American University
+
+---
+
+
+
+
+
+
+
+class: inverse, center, middle
+
+# WHAT IS A DATASET?
+
+---
+# Data vs dataset
+
+- **DATA:** empirical information or observation
+
+- **DATASET:** structured collection of data
+  - Units `-` primary objects or entities under observation or study
+  - Variables `-` measured characteristics of the units
+  
+- Examples:
+  1. [Data I use constantly](https://www.google.com/search?client=firefox-b-1-d&amp;q=premier+league+table#sie=lg;/g/11pz7zbpnb;2;/m/02_tc;st;fp;1;;;)
+  2. [Tracking a river](https://waterdata.usgs.gov/nwis/uv?cb_00060=on&amp;cb_00065=on&amp;format=gif_stats&amp;site_no=01642190&amp;period=&amp;begin_date=2022-09-05&amp;end_date=2022-09-12)
+  3. [Women in parliament](https://docs.google.com/spreadsheets/d/1sZkBcCiUvwX9JEmQhRiXg8SfEP--CxHlyJzoRNs-Hn4/edit#gid=993938300)
+
+
+---
+# DCPS PARCC Data
+
+Partnership for Assessment and Readiness for College and Career Assessment 
+
+- Assessment data for 108 DC public schools, 2017`-`2018  
+
+- Records student proficiency (% at grade level)  
+&amp;zwnj; 
+
+--
+
+&amp;zwnj; 
+
+
+
+Table: The PARCC Data
+
+|SchName                              |SchType     |  ProfLang|  ProfMath|
+|:------------------------------------|:-----------|---------:|---------:|
+|Aiton Elementary School              |Elementary  |       5.6|      15.3|
+|Amidon-Bowen Elementary School       |Elementary  |      16.3|      10.1|
+|Anacostia High School                |High        |       4.5|       1.4|
+|Ballou High School                   |High        |       2.8|       0.5|
+|Bancroft Elementary School @ Sharpe  |Elementary  |      34.3|      39.9|
+
+---
+# Know your variables
+
+- **CATEGORICAL VARIABLE** Qualitative indicator of membership in distinct groups.
+
+&gt; `SchType`: Categorical variable for Elementary, Middle, or High school.
+
+- **NUMERIC VARIABLE** A quantitative measure of amount or degree.
+
+&gt; `ProfLang`: Numeric record of the percentage of students reading at grade-level.
+
+
+---
+class: inverse, center, middle
+
+# DESCRIBING DATA: one variable
+
+
+---
+class: center, middle
+
+# Categorical data
+Tabulating frequencies
+
+
+---
+# Frequencies
+
+### How many units fall into each group?
+
+- **Raw frequency** `\((n_k)\)`: Number of observations in the data belonging to each category.
+&amp;zwnj;  
+
+- **Relative frequency** `\((\%)\)`: Raw frequency divided by total number of observations in the data
+
+- **Modal category**: The most frequent group or value in the data.
+
+
+---
+# Presenting the analysis
+
+### DCPS schools by level, 2017`-`2018
+.pull-left[
+
+Table: FREQUENCY TABLE
+
+|School Type    |    Freq|     (%)|
+|:--------------|-------:|-------:|
+|Elementary     |      64|    59.3|
+|Middle         |      25|    23.1|
+|High           |      19|    17.6|
+]
+
+.pull-right[
+&lt;img src="Correlations_files/figure-html/type-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+class: center, middle
+
+# Numeric data
+Classic summary statistics
+
+
+---
+# Describing a distribution
+
+### Basic statistics
+
+- **Minimum**, `\(Y_{min}\)`: lowest recorded score of `\(Y\)` in the data
+- **Mean**, `\(\mu_{Y}\)`: simple average of recorded scores on `\(Y\)`
+- **Median**, `\(Q_2\)`: value of `\(Y\)` for the unit at the midpoint, or 50th percentile, of the ordered data.
+- **Maximum**, `\(Y_{max}\)`: highest recorded score of `\(Y\)`
+
+
+### Spread
+- **Range**, `\(Y_{max} - Y_{min}\)`
+- **Standard deviation**, `\(\sigma_Y\)`: average distance of the cases from the mean
+- **IQR**, `\(Q_3 - Q_1\)`: range capturing the middle 50% of observed data
+
+
+---
+# Moments of a distribution
+
+- **MEAN**, `\(\mu_{Y}\)`: average value of `\(Y\)` in the data 
+`$$\mu_{Y}=\frac{\sum{Y_i}}{n}$$`
+Note: the mean is a balance point on the number line such that `\(\sum{(Y_i-\mu_{Y})} = 0\)`
+
+- **STANDARD DEVIATION**, `\(\sigma_Y\)`: measure of dispersion
+`$$\sigma_Y = \sqrt{\frac{\sum{(Y_i-\mu_{Y})^2}}{n-1}}$$`
+Note: roughly equal to the average distance from the cases to the mean.
+
+
+---
+# Ex: describing a distribution
+
+Across 108 DCPS schools, an average of 29.7 percent of students read at grade level. The standard deviation is 24.6.  
+
+
+&lt;img src="Correlations_files/figure-html/d1-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+# Rank statistics
+
+### For severely skewed data
+
+- **MEDIAN**, `\(Q_2\)`: value of `\(Y\)` at the midpoint, or 50th percentile, of the ordered data.
+
+- **INTERQUARTILE RANGE**, `\(Q_3 - Q_1\)`: range capturing the middle 50% of observed data
+
+
+---
+# Ex: rank stats remix
+
+Across 108 DCPS schools, an average of 19.1 percent of students read at grade level. The standard deviation is 27.8.
+
+
+&lt;img src="Correlations_files/figure-html/d2-1.svg" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Means, medians, and skew
+
+- **SKEW**: Measure of a distribution's asymmetry; reflected in the divergence of the mean from the median.
+
+&lt;img src="skews.jpg" width="85%" style="display: block; margin: auto;" /&gt;
+
+- **IMPORTANCE**: For skewed distribution, the mean is a biased measure of central tendency.
+
+
+---
+class: inverse, center, middle
+
+# MEASURING CORRELATIONS
+
+---
+# What is a correlation?
+
+Given data on an exposure variable, `\(X\)` and an outcome variable, `\(Y\)`...
+
+&gt; *Statistical independence*: you find no pattern of association between `\(X\)` and `\(Y\)`. The distribution of `\(Y\)` is unchanged across different values or categories of `\(X\)`.
+
+&gt; *Dependence/correlation*: there is a pattern of co-relation or co-occurence between `\(X\)` and `\(Y\)` in the data. The distribution of `\(Y\)` changes systematically "depending" on the value of `\(X\)`. 
+
+&amp;zwnj; 
+
+
+---
+# Measuring correlations
+
+### Simple linear dependence
+
+- Correlation coefficient, `\(r_{xy}\)`: measures direction and degree of linear dependence `\((-1 \leq r \leq 1)\)`.
+
+### Models of the conditional mean
+
+- Regression coefficient, `\(\beta\)`: estimated response in `\(Y\)` for a one-unit increase in `\(X\)`
+
+- Group comparisons (categorical exposure var)
+  - For numeric `\(Y\)`: compare mean outcome across groups, e.g., `\(\mu_T - \mu_C\)`?
+  - For categorical `\(Y\)`: compare the relative frequency of `\(Y\)` within each group of `\(X\)`.
+
+
+---
+class: inverse, center, middle
+
+# Linear regression
+
+
+---
+# The trends we see
+
+### Looking for linear association
+
+&lt;img src="Correlations_files/figure-html/corr-1.svg" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Definining a conditional mean
+
+Model `\(Y\)` as a linear function of `\(X\)`: 
+$$
+Y_i = \alpha + \beta (X_i) + e_i
+$$
+
+### Coefficients
+- Intercept, `\(\alpha = E(Y|X=0)\)`
+- Slope, `\(\beta = E(\Delta Y | \Delta X)\)`
+
+&gt; The slope, `\(\beta\)`, captures the expected effect of a change in `\(X\)` on the mean of `\(Y\)`.
+
+
+### The error term `\(e_i\)`
+- vertical distance between point and line `\(Y_i - (\alpha + \beta(X_i))\)`
+- reflects probabilistic nature of estimation
+
+---
+# The data, the line, the error
+
+From DCPS testing data: 
+$$
+ProfLang_i = 4.3 + 0.94(ProfMath_i) +e_i
+$$
+
+  A one-point increase in math proficiency is associated with a 0.94-point increase in mean language proficiency.
+  
+
+&lt;img src="Correlations_files/figure-html/fit1-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+# What to do with your regression?
+
+$$
+ProfLang_i = 4.3 + 0.94(ProfMath_i) +e_i
+$$
+
+- Estimate average response in `\(Y\)` to unit-change in `\(Y\)`
+
+&gt;   A one-point increase in math proficiency is associated with a 0.94-point increase in mean language proficiency. 
+
+- Predict average `\(Y\)` for a given value of `\(Y\)` 
+$$
+`\begin{aligned}
+E(Y_i|X_i=50) &amp;= 4.3 + 0.94(50)\\
+&amp;= 4.3 + 47 \\
+&amp;= 51.3 \\
+\end{aligned}`
+$$
+
+---
+# Is this causal?
+
+&gt; Correlation is a necessary but insufficient condition for causal inference.
+
+- Beware! The leap from correlation to causation is treacherous.
+
+- All/some/none of the relationship you identify may be evidence of the causal effect of `\(X\)` on `\(Y\)`.
+
+
+---
+class: inverse, center, middle
+
+# Computing in R/RStudio
+
+Preparing for next week
+
+
+---
+class: inverse
+
+# Be ready for R
+
+### For next week
+
+- Install R &amp; RStudio on your computer
+
+- Prep Survival Guide, Ch 1-5.2, and 6.1
+
+- Workshop 1: Tesler, Intro and Ch 1
+
+
+---
+class: inverse, center, middle
+
+# QUIZ: R skills builder quiz
+
+Due by Wednesday, September 28.
+
+Available on Canvas. Attempt the quiz up to five times.
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
