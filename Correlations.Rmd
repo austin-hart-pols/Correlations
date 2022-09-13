@@ -199,7 +199,7 @@ hist(dcps$ProfLang,
 ---
 # Ex: rank stats remix
 
-Across 108 DCPS schools, an average of `r median(dcps$ProfLang) %>% round(digits = 1)` percent of students read at grade level. The standard deviation is `r IQR(dcps$ProfLang) %>% round(digits = 1)`.
+In the median DC public school,  `r median(dcps$ProfLang) %>% round(digits = 1)` percent of students read at grade level. The interquartile range is `r IQR(dcps$ProfLang) %>% round(digits = 1)`.
 
 
 ```{r d2, fig.width = 9, fig.asp = .5}
@@ -324,11 +324,11 @@ $$
 ProfLang_i = 4.3 + 0.94(ProfMath_i) +e_i
 $$
 
-- Estimate average response in $Y$ to unit-change in $Y$
+- Estimate average response in $Y$ to unit-change in $X$
 
 >   A one-point increase in math proficiency is associated with a 0.94-point increase in mean language proficiency. 
 
-- Predict average $Y$ for a given value of $Y$ 
+- Predict average $Y$ for a given value of $X$ 
 $$
 \begin{aligned}
 E(Y_i|X_i=50) &= 4.3 + 0.94(50)\\
