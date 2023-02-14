@@ -19,7 +19,7 @@ output:
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(
   message=FALSE, warning=FALSE, eval = TRUE, echo = FALSE, 
-  fig.align = 'center', dev='svglite'
+  fig.align = 'center', dev='svglite', fig.path = "images/"
 )
 ```
 
@@ -44,7 +44,7 @@ mov %<>%
 
 - Group comparison (categorical X, numeric Y)  
 
-- Linear regression (categorical X, numeric Y)  
+- Linear regression (numeric X, numeric Y)  
 
 ---
 class: inverse, center, middle
@@ -63,7 +63,7 @@ class: inverse, center, middle
   - Variables `-` measured characteristics of the units
   
 - **VARIABLES:** What type of measure is that?
-  - Nominal
+  - Categorical
   - Numeric
   
 - Examples:
@@ -289,9 +289,9 @@ class: center, middle
 
 - Assessing relationship between:  
 
-  - Nominal exposure variable $(x)$  
+  - Categorical exposure variable $(x)$  
 
-  - Nominal outcome variable $(y)$
+  - Categorical outcome variable $(y)$
 
 - Process: tabulate by group and compare!  
 
@@ -378,7 +378,7 @@ class: center, middle
 
 Assessing the relationship between:  
 
-- Nominal exposure variable $(x)$ 
+- Categorical exposure variable $(x)$ 
 - Continuous outcome variable $(y)$  
 
 Process: Describe data in each group and compare!
