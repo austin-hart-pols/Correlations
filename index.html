@@ -59,7 +59,7 @@ class: inverse, center, middle
 
 - **DATA:** empirical information or observation
 
-- **DATASET:** structured collection of data
+- **DATASET:** rectangular structure of data
   - Units `-` primary objects or entities under observation or study
   - Variables `-` measured characteristics of the units
   
@@ -125,7 +125,7 @@ class: inverse, center, middle
 &lt;/table&gt;
 
 ---
-# Compare representation change over time
+# Compare representation over time
 
 .pull-left[
 &lt;table class=" lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'&gt;
@@ -220,18 +220,14 @@ class: inverse, center, middle
 ---
 # Summarizing numeric data
 
-### Basic statistics
+### 7 number summary
 
-- **Minimum**, `\(y_{min}\)`: lowest recorded score of `\(y\)` in the data
-- **Mean**, `\(\bar{y}\)`: simple average of recorded scores on `\(y\)`
-- **Median**, `\(Q_2\)`: value of `\(y\)` for the unit at the midpoint, or 50th percentile, of the ordered data.
-- **Maximum**, `\(y_{max}\)`: highest recorded score of `\(y\)`
-
-
-### Spread
-- **Range**, `\(y_{max} - y_{min}\)`
-- **Standard deviation**, `\(\sigma_y\)`: average distance of the cases from the mean
-- **IQR**, `\(Q_3 - Q_1\)`: range capturing the middle 50% of observed data
+- **Minimum**: lowest recorded score of `\(y\)` in the data
+- **Mean**: simple average of recorded scores on `\(y\)`
+- **Median**: value of `\(y\)` for the unit at the midpoint, or 50th percentile, of the ordered data.
+- **Maximum**: highest recorded score of `\(y\)`
+- **Standard deviation**: average distance of the cases from the mean
+- **IQR**: range capturing the middle 50% of observed data
 
 
 ---
@@ -338,20 +334,18 @@ class: inverse, center, middle
 ---
 # What is a correlation?
 
-Given data on an exposure variable, `\(x\)` and an outcome variable, `\(y\)`...
+- *Correlation/dependence*: pattern of association between `\(x\)` and `\(y\)` in the data. The distribution of `\(y\)` changes systematically "depending" on the value of `\(x\)`. 
 
-&gt; *Statistical independence*: you find no pattern of association between `\(x\)` and `\(y\)`. The distribution of `\(y\)` is constant across different values or categories of `\(x\)`.
-
-&gt; *Correlation/dependence*: pattern of association between `\(x\)` and `\(y\)` in the data. The distribution of `\(y\)` changes systematically "depending" on the value of `\(x\)`. 
+- *Statistical independence*: you find no pattern of association between `\(x\)` and `\(y\)`. The distribution of `\(y\)` is constant across different values or categories of `\(x\)`.  
 
 
 ---
 # Correlation requires comparison
 
-&gt; Compare data on `\(y\)` across different values or for different groups of `\(x\)`
+&gt; Compare data on `\(y\)` across different values or groups of `\(x\)`
 
 .pull-left[
-### Where is variation in `\(x\)`?
+### Where do you see variation in `\(x\)`?
 - Cross-sectional data
   - One observation/record per unit
   - `\(x\)` differs across units
@@ -362,7 +356,7 @@ Given data on an exposure variable, `\(x\)` and an outcome variable, `\(y\)`...
 ]
 
 .pull-right[
-### Source of change in `\(x\)`?
+### Why does `\(x\)` vary or change?
 - Experimental design
   - Researcher randomly assigns
   - Administers `\(x\)`  
@@ -381,7 +375,7 @@ class: center, middle
 ---
 # Cross&amp;ndash;tabulation
 
-&gt; Does the distribution on the outcome (i.e. relative frequency table) differ by groups?
+&gt; Does the distribution on the outcome variable (i.e. relative frequency table) differ by groups?
 
 - Assessing relationship between:  
 
@@ -640,7 +634,7 @@ class: center, middle, inverse
 - Correlation coefficient, `\(r_{xy}\)`: measures direction and degree of linear dependence `\((-1 \leq r \leq 1)\)`.
 
 
-### Models of the conditional mean
+### Models of the mean
 
 - Regression coefficient, `\(b_1\)`: estimated change in mean of `\(y\)` for every one-unit increase in `\(x\)`
 
@@ -718,8 +712,8 @@ class: inverse
 
 ### Is this causal?
 - Correlation is a necessary but insufficient condition for causal inference.
-- All/some/none of the relationship you identify may be evidence of the causal effect... 
-  - of `\(x\)` on `\(y\)`
+- All/some/none of the relationship you identify may be evidence of the effect... 
+  - of `\(y\)` on `\(x\)`
   - of `\(z\)`, an omitted cause of `\(x\)` and `\(y\)`
 
 ### Is this systematic?
@@ -732,8 +726,7 @@ class: inverse
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true,
-"countIncrementalSlides": false,
-"ratio": "16:9"
+"countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
