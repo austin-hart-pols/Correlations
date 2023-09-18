@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Measuring correlations</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Austin Hart" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/rladies.css" rel="stylesheet" />
+    <link href="libs/remark-css/rladies-fonts.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Measuring correlations
+]
+.subtitle[
+## Identifying empirical relationships
+]
+.author[
+### Austin Hart
+]
+.institute[
+### American University
+]
+
+---
+
+
+
+
+
+
+
+
+# Identifying associations
+
+### Three methods for today
+
+- Cross-tabulation (categorical X, categorical Y)  
+
+- Group comparison (categorical X, numeric Y)  
+
+- Linear regression (numeric X, numeric Y)  
+
+---
+class: inverse, center, middle
+
+# Recap
+### Describing data on 1 variable
+
+
+---
+# Data vs dataset
+
+- **DATA:** empirical information or observation
+
+- **DATASET:** rectangular structure of data
+  - Units `-` primary objects or entities under observation or study
+  - Variables `-` measured characteristics of the units
+  
+- **VARIABLES:** What type of measure is that?
+  - Categorical
+  - Numeric
+  
+- Examples:
+  1. [Data I use constantly](https://www.google.com/search?client=firefox-b-1-d&amp;q=premier+league+table#sie=lg;/g/11pz7zbpnb;2;/m/02_tc;st;fp;1;;;)
+  2. [Women in parliament](https://docs.google.com/spreadsheets/d/1sZkBcCiUvwX9JEmQhRiXg8SfEP--CxHlyJzoRNs-Hn4/edit#gid=993938300)
+
+
+
+---
+# Summarizing categorical data
+
+### How many units fall into each group?
+
+- "Bechdel test" data
+- Evaluates 1,794 films 1970\-2013
+
+&lt;table class=" lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'&gt;
+&lt;caption&gt;What women talk about, 1970-1990&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Bechdel Score &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; N &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; % &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; nowomen &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 11.3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; notalk &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 67 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 34.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; men &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 15.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; dubious &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 9.8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; ok &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 56 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 28.9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Total &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 194 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 100.0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# Compare representation over time
+
+.pull-left[
+&lt;table class=" lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'&gt;
+&lt;caption&gt;What women talk about, 1970-1990&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Bechdel Score &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; N &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; % &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; nowomen &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 11.3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; notalk &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 67 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 34.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; men &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 15.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; dubious &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 9.8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; ok &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 56 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 28.9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Total &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 194 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 100.0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+&lt;table class=" lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'&gt;
+&lt;caption&gt;What women talk about, 1991-2013&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Bechdel Score &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; N &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; % &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; nowomen &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 119 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 7.4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; notalk &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 447 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 27.9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; men &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 164 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 10.2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; dubious &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 123 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 7.7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; ok &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 747 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 46.7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Total &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1600 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 100.0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+# Summarizing numeric data
+
+### 7 number summary
+
+- **Minimum**: lowest recorded score of `\(y\)` in the data
+- **Mean**: simple average of recorded scores on `\(y\)`
+- **Median**: value of `\(y\)` for the unit at the midpoint, or 50th percentile, of the ordered data.
+- **Maximum**: highest recorded score of `\(y\)`
+- **Standard deviation**: average distance of the cases from the mean
+- **IQR**: range capturing the middle 50% of observed data
+
+
+---
+# Summarize numeric data 
+
+.pull-left[
+
+&amp;nbsp;
+
+&lt;table class=" lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'&gt;
+&lt;caption&gt;Bechdel Pass Films&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;  &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Budget, USD &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Min &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $38,855 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Average &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $46,274,167 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Median &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $31,459,218 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Max &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $337,063,045 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; SD &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $48,563,305 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+&lt;img src="images/d2-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Budgets in comparison
+
+.pull-left[
+
+&amp;nbsp;
+
+&lt;table class=" lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'&gt;
+&lt;caption&gt;Budget by Bechdel Test&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; name &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; FAIL &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PASS &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Min &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $8,632 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $38,855 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Average &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $63,399,082 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $48,336,176 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Median &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $45,863,384 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $31,784,400 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Max &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $461,435,929 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $337,063,045 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; SD &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $58,376,910 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $50,594,472 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+
+&lt;img src="images/d2comp-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+class: inverse, center, middle
+
+# MEASURING EMPIRICAL RELATIONSHIPS
+
+---
+# What is a correlation?
+
+- *Correlation/dependence*: pattern of association between `\(x\)` and `\(y\)` in the data. The distribution of `\(y\)` changes systematically "depending" on the value of `\(x\)`. 
+
+- *Statistical independence*: you find no pattern of association between `\(x\)` and `\(y\)`. The distribution of `\(y\)` is constant across different values or categories of `\(x\)`.  
+
+
+---
+# Correlation requires comparison
+
+&gt; Compare data on `\(y\)` across different values or groups of `\(x\)`
+
+.pull-left[
+### Where do you see variation in `\(x\)`?
+- Cross-sectional data
+  - One observation/record per unit
+  - `\(x\)` differs across units
+  
+- Time-series data: 
+  - Multiple records per unit
+  - `\(x\)` changes over time w/i units
+]
+
+.pull-right[
+### Why does `\(x\)` vary or change?
+- Experimental design
+  - Researcher randomly assigns
+  - Administers `\(x\)`  
+  
+- Observational design
+  - Researcher observes `\(x\)`
+  - "Nature" assigns/administers
+]
+
+
+---
+class: center, middle
+
+# Cross&amp;ndash;tabulation
+
+---
+# Cross&amp;ndash;tabulation
+
+&gt; Does the distribution on the outcome variable (i.e. relative frequency table) differ by groups?
+
+- Assessing relationship between:  
+
+  - Categorical exposure variable `\((x)\)`  
+
+  - Categorical outcome variable `\((y)\)`
+
+- Process: tabulate by group and compare!  
+
+
+---
+# You already did this!
+
+.pull-left[
+&lt;table class=" lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'&gt;
+&lt;caption&gt;What women talk about, 1970-1990&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Bechdel Score &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; N &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; % &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; nowomen &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 11.3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; notalk &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 67 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 34.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; men &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 15.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; dubious &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 9.8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; ok &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 56 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 28.9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Total &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 194 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 100.0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+&lt;table class=" lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'&gt;
+&lt;caption&gt;What women talk about, 1991-2013&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Bechdel Score &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; N &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; % &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; nowomen &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 119 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 7.4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; notalk &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 447 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 27.9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; men &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 164 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 10.2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; dubious &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 123 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 7.7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; ok &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 747 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 46.7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Total &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1600 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;"&gt; 100.0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+# Putting it together
+
+### A proper cross-tabulation
+
+&lt;table class=" lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'&gt;
+&lt;caption&gt;Development of women characters over time&lt;/caption&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="empty-cells: hide;" colspan="1"&gt;&lt;/th&gt;
+&lt;th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #00000020; padding-bottom: 5px; "&gt;1970-1990&lt;/div&gt;&lt;/th&gt;
+&lt;th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #00000020; padding-bottom: 5px; "&gt;1991-2013&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; n &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; % &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; n &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; % &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; nowomen &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11.3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 119 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; notalk &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 67 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 34.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 447 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27.9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; men &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 164 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; dubious &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 123 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; ok &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 56 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 747 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 46.7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Total &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 194 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 100.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1600 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 100.0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+class: center, middle
+
+# Group comparisons
+
+---
+# Comparing groups
+
+Assessing the relationship between:  
+
+- Categorical exposure variable `\((x)\)` 
+- Continuous outcome variable `\((y)\)`  
+
+Process: Describe data in each group and compare!
+
+---
+# You've already done this too
+
+
+.pull-left[
+
+&amp;nbsp;
+
+&lt;table class=" lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'&gt;
+&lt;caption&gt;Budget by Bechdel Test&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; name &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; FAIL &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PASS &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Min &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $8,632 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $38,855 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Average &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $63,399,082 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $48,336,176 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Median &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $45,863,384 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $31,784,400 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Max &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $461,435,929 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $337,063,045 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; SD &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $58,376,910 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; $50,594,472 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+
+&lt;img src="images/d2comp2-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+---
+class: center, middle, inverse
+
+# Linear regression
+
+
+---
+# The trends we see
+
+### Looking for linear association, DCPS PARCC
+
+&lt;img src="images/corr-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+# Measuring linear correlation
+
+### Simple linear dependence
+
+- Correlation coefficient, `\(r_{xy}\)`: measures direction and degree of linear dependence `\((-1 \leq r \leq 1)\)`.
+
+
+### Models of the mean
+
+- Regression coefficient, `\(b_1\)`: estimated change in mean of `\(y\)` for every one-unit increase in `\(x\)`
+
+
+---
+# Definining a conditional mean
+
+Model `\(y\)` as a linear function of `\(x\)` and error: 
+$$
+y_i = b_0 + b_1(x_i) + e_i
+$$
+
+### Coefficients
+- Intercept, `\(b_0 = E(Y|X=0)\)`
+- Slope, `\(b_1 = E(\Delta Y | \Delta X)\)`
+
+&gt; The slope, `\(\beta\)`, captures the expected change in the mean of `\(y\)` given a one-unit increase in `\(x\)`.
+
+
+### The error term, `\(e_i\)`
+- deviation from observed and predicted: `\(e_i = y_i - (b_0 + b_1(x_i))\)`
+- reflects systematic bias and/or random error
+
+
+---
+# The data, the line, the error
+
+From DCPS testing data: 
+$$
+ProfLang_i = 4.3 + 0.94(ProfMath_i) +e_i
+$$
+
+  A one-point increase in math proficiency is associated with a 0.94-point increase in mean language proficiency.
+  
+
+&lt;img src="images/fit1-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+# What to do with your regression?
+
+$$
+ProfLang_i = 4.3 + 0.94(ProfMath_i) +e_i
+$$
+
+- Estimate average response in `\(y\)` to unit-change in `\(x\)`
+
+&gt;   A one-point increase in math proficiency is associated with a 0.94-point increase in mean language proficiency. 
+
+- Predict average `\(y\)` for a given value of `\(x\)` 
+$$
+`\begin{aligned}
+E(y_i|x_i=50) &amp;= 4.3 + 0.94(50)\\
+&amp;= 4.3 + 47 \\
+&amp;= 51.3 \\
+\end{aligned}`
+$$
+
+---
+# Precision of regression estimates
+
+&gt; Coefficient of Determination, `\(R^2\)`
+&gt; Captures percent of variation in y accounted for by x.
+
+- Useful in comparing association across groups 
+- Largely phasing out
+  - Means very little in isolation
+  - "prediction" is not typically the aim
+
+---
+class: inverse
+
+# Mandatory warning labels
+
+### Is this causal?
+- Correlation is a necessary but insufficient condition for causal inference.
+- All/some/none of the relationship you identify may be evidence of the effect... 
+  - of `\(y\)` on `\(x\)`
+  - of `\(z\)`, an omitted cause of `\(x\)` and `\(y\)`
+
+### Is this systematic?
+- Could this be the result of chance alone?
+- What does it say about a broader population of cases?
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
